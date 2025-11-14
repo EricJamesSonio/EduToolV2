@@ -8,6 +8,7 @@ import assessmentRoutes from "./src/backend/routes/assessmentRoutes.js";
 import finalGradesRoutes from "./src/backend/routes/finalGradesRoutes.js";
 import behaviorRoutes from "./src/backend/routes/behaviorRoutes.js";
 import lessonPlanRoutes from "./src/backend/routes/lessonPlanRoutes.js";
+import scheduleRoutes from "./src/backend/routes/scheduleRoutes.js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -29,6 +30,7 @@ app.use("/api/assessments", assessmentRoutes);
 app.use("/api/grades", finalGradesRoutes);
 app.use("/api/behavior", behaviorRoutes);
 app.use("/api/lessons", lessonPlanRoutes); 
+app.use("/api/schedules", scheduleRoutes);
 
 // Websocket example
 io.on("connection", (socket) => {
