@@ -1,41 +1,49 @@
-import { useState, useContext } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { useContext } from "react";
 import AuthContext from "../context/AuthContext";
-import { authService } from "../services/authService";
 
-export default function Login() {
-  const { login } = useContext(AuthContext);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+import Login from "../pages/Login";
+import Dashboard from "../pages/Dashboard";
+import Lessons from "../pages/Lessons";
+import Grades from "../pages/Grades";
+import Schedule from "../pages/Schedule";
+import MainLayout from "../layouts/MainLayout";
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await authService.login(email, password);
-      login(res.teacher, res.token);
-      setError("");
-      // Redirect to dashboard
-      window.location.href = "/dashboard";
-    } catch (err) {
-      setError(err.response?.data?.error || "Login failed");
-    }
+export default function AppRoutes() {
+  const { user, loading } = useContext(AuthContext);
+
+  if (loading) return <div>Loading...</div>; // wait until auth state is loaded
+
+  const PrivateRoute = ({ children }) => {
+    return user ? children : <Navigate to="/login" />;
   };
 
   return (
-    <div className="login-container">
-      <h2>Teacher Login</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-    </div>
+    <Router>
+      <Routes>
+        {/* Public Route */}
+        <Route path="/login" element={!user ? <Login /> : <Navigate to="/dashboard" />} />
+
+        {/* Protected Routes */}
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <MainLayout />
+            </PrivateRoute>
+          }
+        >
+          <Route index element={<Navigate to="dashboard" />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="lessons" element={<Lessons />} />
+          <Route path="grades" element={<Grades />} />
+          <Route path="schedule" element={<Schedule />} />
+        </Route>
+
+        {/* Catch-all */}
+        <Route path="*" element={<Navigate to={user ? "/dashboard" : "/login"} />} />
+      </Routes>
+    </Router>
   );
 }
+

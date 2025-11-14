@@ -1,0 +1,78 @@
+/* Container */
+.login-container {
+  width: 380px;
+  margin: 90px auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  font-family: "Inter", sans-serif;
+  text-align: center;
+}
+
+.login-container h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.login-container form div {
+  margin-bottom: 1.2rem;
+  text-align: left;
+}
+
+/* Labels */
+.login-container label {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.4rem;
+}
+
+/* Inputs */
+.login-container input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.login-container input:focus {
+  border-color: #6366f1;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+}
+
+/* Button */
+.login-container button {
+  width: 100%;
+  padding: 0.8rem;
+  background: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+  margin-top: 0.5rem;
+}
+
+.login-container button:hover {
+  background: #4338ca;
+}
+
+/* Error message */
+.login-container .error {
+  color: #dc2626;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+* {
+  box-sizing: border-box;
+}
+

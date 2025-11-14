@@ -5,8 +5,8 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // Persist login on refresh
   useEffect(() => {
     const savedToken = localStorage.getItem("token");
     const savedUser = JSON.parse(localStorage.getItem("user"));
@@ -14,6 +14,7 @@ export const AuthProvider = ({ children }) => {
       setToken(savedToken);
       setUser(savedUser);
     }
+    setLoading(false);
   }, []);
 
   const login = (userData, jwtToken) => {
@@ -31,10 +32,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
+    <AuthContext.Provider value={{ user, token, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
 };
+
 
 export default AuthContext;

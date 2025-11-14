@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import AuthContext from "../context/AuthContext";
 import { authService } from "../services/authService";
+import '../styles/Login.css';
 
 export default function Login() {
   const { login } = useContext(AuthContext);
