@@ -39,5 +39,17 @@ export const assessmentRepository = {
       "INSERT INTO assessment_answers (submission_id, item_id, chosen_answer, is_correct) VALUES ?",
       [values]
     );
+  },
+
+    getStudentScores: async (studentId) => {
+    const [rows] = await db.query(
+      `SELECT s.score, a.type
+       FROM assessment_submissions s
+       JOIN assessments a ON s.assessment_id = a.id
+       WHERE s.student_id = ?`,
+      [studentId]
+    );
+    return rows;
   }
 };
+

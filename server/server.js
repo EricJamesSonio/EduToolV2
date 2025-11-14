@@ -5,6 +5,8 @@ import { Server } from "socket.io";
 import authRoutes from "./src/backend/routes/authRoutes.js";
 import attendanceRoutes from "./src/backend/routes/attendanceRoutes.js";
 import assessmentRoutes from "./src/backend/routes/assessmentRoutes.js";
+import finalGradesRoutes from "./src/backend/routes/finalGradesRoutes.js";
+import behaviorRoutes from "./src/backend/routes/behaviorRoutes.js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -23,6 +25,8 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/attendance", attendanceRoutes);
 app.use("/api/assessments", assessmentRoutes);
+app.use("/api/grades", finalGradesRoutes);
+app.use("/api/behavior", behaviorRoutes);
 
 // Websocket example
 io.on("connection", (socket) => {
