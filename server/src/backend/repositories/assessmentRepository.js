@@ -50,6 +50,83 @@ export const assessmentRepository = {
       [studentId]
     );
     return rows;
+  },
+
+  createAccessLink: async (assessmentId, studentId) => {
+    const token = crypto.randomBytes(20).toString("hex");
+
+    await db.query(
+    `INSERT INTO assessment_access_links (assessment_id, student_id, token, expires_at)
+    VALUES (?, ?, ?, DATE_ADD(NOW(), INTERVAL 1 DAY))`,
+    [assessmentId, studentId, token]
+    );
+
+
+    return token;
+  },
+
+  getAssessmentByToken: async (token) => {
+    const [rows] = await db.query(
+      `SELECT * FROM assessment_access_links WHERE token = ? AND used = 0`,
+      [token]
+    );
+    return rows[0];
+  },
+
+  markLinkAsUsed: async (token) => {
+    await db.query(
+      `UPDATE assessment_access_links SET used = 1 WHERE token = ?`,
+      [token]
+    );
+  },
+
+  markAssessmentOpened: async (assessmentId, studentId) => {
+    await db.query(
+      `INSERT INTO assessment_student_access (assessment_id, student_id, opened_at)
+       VALUES (?, ?, NOW())
+       ON DUPLICATE KEY UPDATE opened_at = NOW()`
+      ,
+      [assessmentId, studentId]
+    );
+  },
+
+  hasSubmitted: async (assessmentId, studentId) => {
+    const [rows] = await db.query(
+      `SELECT submitted FROM assessment_student_access
+       WHERE assessment_id = ? AND student_id = ?`,
+      [assessmentId, studentId]
+    );
+    return rows[0]?.submitted === 1;
+  },
+
+  markSubmitted: async (assessmentId, studentId) => {
+    await db.query(
+      `UPDATE assessment_student_access
+       SET submitted = 1, submitted_at = NOW()
+       WHERE assessment_id = ? AND student_id = ?`,
+      [assessmentId, studentId]
+    );
+  },
+
+  getAssessmentItemsWithOptions: async (assessmentId) => {
+    const [items] = await db.query(
+      `SELECT * FROM assessment_items WHERE assessment_id = ?`,
+      [assessmentId]
+    );
+
+    for (const item of items) {
+      const [options] = await db.query(
+        `SELECT id, option_text FROM assessment_item_options WHERE item_id = ?`,
+        [item.id]
+      );
+      item.options = options;
+    }
+
+    // shuffle questions
+    items.sort(() => Math.random() - 0.5);
+
+    return items;
   }
+
 };
 

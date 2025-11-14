@@ -21,6 +21,11 @@ import { scheduleEntriesTable } from "./models/schedule_entries.js";
 import { lessonPlansTable } from "./models/lesson_plans.js";
 import { lessonPlanEntriesTable } from "./models/lesson_plan_entries.js";
 
+// ===== NEW ASSESSMENT TABLES =====
+import { assessmentAccessLinksTable } from "./models/assessment_access_links.js";
+import { assessmentItemOptionsTable } from "./models/assessment_item_options.js";
+import { assessmentStudentAccessTable } from "./models/assessment_student_access.js";
+
 // ===== SEEDS =====
 import { seedStudents } from "./seeds/seed_students.js";
 import { seedGradingSettings } from "./seeds/seed_grading_settings.js";
@@ -39,6 +44,9 @@ const tables = [
   assessmentItemsTable,
   assessmentSubmissionsTable,
   assessmentAnswersTable,
+  assessmentAccessLinksTable,       // NEW
+  assessmentItemOptionsTable,       // NEW
+  assessmentStudentAccessTable,     // NEW
   attendanceTable,
   behaviorScoresTable,
   finalGradesTable,
@@ -130,26 +138,24 @@ async function init() {
     console.log("⚠ Teacher already exists — skipping");
   }
 
-    // Seeds (safe mode)
-    console.log("\n🌱 Running seeds...");
+  // Seeds (safe mode)
+  console.log("\n🌱 Running seeds...");
 
-    for (let i = 0; i < seeds.length; i++) {
+  for (let i = 0; i < seeds.length; i++) {
     const seed = seeds[i];
 
     if (Array.isArray(seed)) {
-        // Multiple SQL queries
-        for (let j = 0; j < seed.length; j++) {
+      // Multiple SQL queries
+      for (let j = 0; j < seed.length; j++) {
         await runSafe(db, seed[j], `Seed ${i + 1}.${j + 1}`);
-        }
+      }
     } else {
-        // Single SQL query
-        await runSafe(db, seed, `Seed ${i + 1}`);
+      // Single SQL query
+      await runSafe(db, seed, `Seed ${i + 1}`);
     }
-    }
-
+  }
 
   console.log("\n🎉 DATABASE SETUP COMPLETE (safe mode)!");
-
   process.exit(0);
 }
 
