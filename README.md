@@ -75,7 +75,11 @@ With a strong focus on:
 ---
 
 ## 🏁 Getting Started (Optional Section)
-*(Add this later if you want installation steps)*
+* Clone this repo*
+* Start Client : cd client then npm run dev
+* Start Xampp First before starting server
+* Seed first using : cd server then npm run initDb
+* Start Server : cd server then npm start (adjust .env file if needed)
 
 ---
 
