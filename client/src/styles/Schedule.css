@@ -1,0 +1,126 @@
+/* Container */
+.schedule-page {
+  padding: 20px;
+  background-color: #f8f9fa;
+  min-height: calc(100vh - 60px); /* full height minus navbar */
+  font-family: "Inter", sans-serif;
+}
+
+/* Page Title */
+.schedule-page h2 {
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  color: #1f2937;
+}
+
+/* Table */
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.schedule-table th,
+.schedule-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.95rem;
+  color: #374151;
+}
+
+.schedule-table th {
+  background-color: #f3f4f6;
+  font-weight: 600;
+}
+
+.schedule-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Table buttons */
+.schedule-table button {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  margin-right: 5px;
+  transition: 0.2s;
+}
+
+.schedule-table button:hover {
+  background-color: #2563eb;
+}
+
+.schedule-table button:last-child {
+  background-color: #ef4444;
+}
+
+.schedule-table button:last-child:hover {
+  background-color: #dc2626;
+}
+
+/* Form Section */
+.schedule-page h3 {
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  color: #1f2937;
+}
+
+/* Form */
+.schedule-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+/* Inputs */
+.schedule-form input {
+  flex: 1 1 150px;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: 0.2s;
+}
+
+.schedule-form input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+/* Submit button */
+.schedule-form button {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  flex: 1 1 100px;
+  transition: 0.2s;
+}
+
+.schedule-form button:hover {
+  background-color: #059669;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .schedule-form {
+    flex-direction: column;
+  }
+}
