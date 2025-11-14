@@ -29,25 +29,41 @@ export const lessonPlanController = {
     }
   },
 
-  getWeeklyPlans: async (req, res) => {
+    getWeeklyPlans: async (req, res) => {
     try {
-      const teacher_id = req.user.id;
-      const { weekNumber, year } = req.params;
-      const plans = await lessonPlanService.getWeeklyPlans(teacher_id, weekNumber, year);
-      res.json({ success: true, plans });
-    } catch (err) {
-      res.status(500).json({ error: err.message });
-    }
-  },
+        const teacher_id = req.user.id;
+        const { weekNumber, year } = req.params;
+        const entries = await lessonPlanService.getWeeklyPlans(teacher_id, weekNumber, year);
 
-  getMonthlyPlans: async (req, res) => {
-    try {
-      const teacher_id = req.user.id;
-      const { month, year } = req.params;
-      const plans = await lessonPlanService.getMonthlyPlans(teacher_id, month, year);
-      res.json({ success: true, plans });
+        res.json({
+        period_type: "week",
+        week_number: parseInt(weekNumber),
+        year: parseInt(year),
+        entries,
+        });
     } catch (err) {
-      res.status(500).json({ error: err.message });
+        console.error(err);
+        res.status(500).json({ error: err.message });
     }
-  }
+    },
+
+
+    getMonthlyPlans: async (req, res) => {
+    try {
+        const teacher_id = req.user.id;
+        const { month, year } = req.params;
+        const entries = await lessonPlanService.getMonthlyPlans(teacher_id, month, year);
+
+        res.json({
+        period_type: "month",
+        month: parseInt(month),
+        year: parseInt(year),
+        entries,
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: err.message });
+    }
+    }
+
 };

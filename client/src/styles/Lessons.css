@@ -1,0 +1,130 @@
+/* Container */
+.lessons-page {
+  padding: 20px;
+  background-color: #f8f9fa;
+  min-height: calc(100vh - 60px); /* full height minus navbar */
+  font-family: "Inter", sans-serif;
+}
+
+/* Page Title */
+.lessons-page h2,
+.lessons-page h3 {
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  color: #1f2937;
+}
+
+/* Table - reuse schedule styles */
+.lesson-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.lesson-table th,
+.lesson-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.95rem;
+  color: #374151;
+}
+
+.lesson-table th {
+  background-color: #f3f4f6;
+  font-weight: 600;
+}
+
+.lesson-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Table buttons */
+.lesson-table button {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  margin-right: 5px;
+  transition: 0.2s;
+}
+
+.lesson-table button:hover {
+  background-color: #2563eb;
+}
+
+.lesson-table button:last-child {
+  background-color: #ef4444;
+}
+
+.lesson-table button:last-child:hover {
+  background-color: #dc2626;
+}
+
+/* Form */
+.lesson-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+/* Inputs */
+.lesson-form input,
+.lesson-form select {
+  flex: 1 1 150px;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: 0.2s;
+}
+
+.lesson-form input:focus,
+.lesson-form select:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+/* Submit & Cancel buttons */
+.lesson-form button {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  flex: 1 1 100px;
+  transition: 0.2s;
+}
+
+.lesson-form button:hover {
+  background-color: #059669;
+}
+
+.lesson-form button[type="button"] {
+  background-color: #ef4444;
+}
+
+.lesson-form button[type="button"]:hover {
+  background-color: #dc2626;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .lesson-form {
+    flex-direction: column;
+  }
+}
