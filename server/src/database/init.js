@@ -32,6 +32,10 @@ import { seedGradingSettings } from "./seeds/seed_grading_settings.js";
 import { seedSemesters } from "./seeds/seed_semesters.js";
 import { seedAssessments } from "./seeds/seed_assessments.js";
 import { seedFinalGrades } from "./seeds/seed_final_grades.js";
+import { seedLessonPlans } from "./seeds/seed_lesson_plans.js";
+import { seedLessonPlanEntries } from "./seeds/seed_lesson_plan_entries.js";
+import { seedScheduleVersions } from "./seeds/seed_schedule_versions.js";
+import { seedScheduleEntries } from "./seeds/seed_schedule_entries.js";
 
 const DB_NAME = process.env.DB_NAME;
 
@@ -63,8 +67,13 @@ const seeds = [
   seedGradingSettings,
   seedSemesters,
   seedAssessments,
-  seedFinalGrades
+  seedFinalGrades,
+  seedLessonPlans,
+  seedLessonPlanEntries,
+  seedScheduleVersions,
+  seedScheduleEntries
 ];
+
 
 /**
  * Strict SQL runner — stops script on error (for tables / critical ops)
