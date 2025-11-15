@@ -1,16 +1,24 @@
+// finalGradesService.js
 import { finalGradesRepository } from "../repositories/finalGradesRepository.js";
 import { db } from "../../database/db.js";
 
 export const finalGradesService = {
-  calculateFinalGrade: async (studentId, periodStart = "1970-01-01", periodEnd = "2099-12-31") => {
+  calculateFinalGrade: async (studentId, period, quarter) => {
     // 1️⃣ Fetch grading weights
-    const [settingsRows] = await db.query(
-      `SELECT * FROM grading_settings ORDER BY id DESC LIMIT 1`
-    );
+    const [settingsRows] = await db.query(`SELECT * FROM grading_settings ORDER BY id DESC LIMIT 1`);
     if (!settingsRows.length) throw new Error("Grading settings not found");
     const weights = settingsRows[0];
 
-    // 2️⃣ Aggregate assessment averages by type
+    // 2️⃣ Aggregate assessment averages by type for this student, period & quarter
+    // You can implement logic to determine periodStart/End based on quarter
+    const periodDates = {
+      Prelim: ["2025-06-01","2025-08-31"],
+      Midterm: ["2025-09-01","2025-10-31"],
+      'Pre-Finals': ["2025-11-01","2025-12-15"],
+      Finals: ["2025-12-16","2025-12-31"]
+    };
+    const [periodStart, periodEnd] = periodDates[quarter] || ["1970-01-01","2099-12-31"];
+
     const [assessmentRows] = await db.query(
       `SELECT a.type, AVG(s.score) as avg_score
        FROM assessment_submissions s
@@ -20,13 +28,9 @@ export const finalGradesService = {
       [studentId, periodStart, periodEnd]
     );
 
-    // Initialize all types to 0
     const typeAverages = { exam: 0, activity: 0, quiz: 0, exercise: 0 };
-    assessmentRows.forEach(row => {
-      typeAverages[row.type] = parseFloat(row.avg_score) || 0;
-    });
+    assessmentRows.forEach(row => { typeAverages[row.type] = parseFloat(row.avg_score) || 0; });
 
-    // 3️⃣ Get behavior score average
     const [behaviorRows] = await db.query(
       `SELECT AVG(score) as behavior_avg
        FROM behavior_scores
@@ -35,7 +39,6 @@ export const finalGradesService = {
     );
     const behaviorAvg = behaviorRows[0]?.behavior_avg || 0;
 
-    // 4️⃣ Compute weighted final grade
     const totalWeight =
       (weights.exam_weight || 0) +
       (weights.activity_weight || 0) +
@@ -49,18 +52,19 @@ export const finalGradesService = {
       (typeAverages.quiz * (weights.quiz_weight || 0)) +
       (typeAverages.exercise * (weights.exercise_weight || 0)) +
       (behaviorAvg * (weights.behavior_weight || 0))
-    ) / (totalWeight || 1); // avoid division by zero
+    ) / (totalWeight || 1);
 
-    // 5️⃣ Persist final grade
+    // 5️⃣ Persist per quarter
     await finalGradesRepository.upsertFinalGrade({
       student_id: studentId,
-      period: `${periodStart} to ${periodEnd}`,
+      period,
+      quarter,
       exam_grade: typeAverages.exam,
       activity_grade: typeAverages.activity,
       quiz_grade: typeAverages.quiz,
       exercise_grade: typeAverages.exercise,
       behavior_grade: behaviorAvg,
-      final_grade: finalGrade,
+      final_grade: finalGrade
     });
 
     return {
@@ -69,7 +73,11 @@ export const finalGradesService = {
       quiz: typeAverages.quiz,
       exercise: typeAverages.exercise,
       behavior: behaviorAvg,
-      final: finalGrade,
+      final: finalGrade
     };
   },
+
+  getStudentGrades: async (studentId, period) => {
+    return await finalGradesRepository.getGradesByStudent(studentId, period);
+  }
 };

@@ -31,6 +31,7 @@ import { seedStudents } from "./seeds/seed_students.js";
 import { seedGradingSettings } from "./seeds/seed_grading_settings.js";
 import { seedSemesters } from "./seeds/seed_semesters.js";
 import { seedAssessments } from "./seeds/seed_assessments.js";
+import { seedFinalGrades } from "./seeds/seed_final_grades.js";
 
 const DB_NAME = process.env.DB_NAME;
 
@@ -61,7 +62,8 @@ const seeds = [
   seedStudents,
   seedGradingSettings,
   seedSemesters,
-  seedAssessments
+  seedAssessments,
+  seedFinalGrades
 ];
 
 /**
