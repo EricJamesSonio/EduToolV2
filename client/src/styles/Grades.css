@@ -1,0 +1,41 @@
+.grades-page {
+  padding: 20px;
+}
+
+.period-filter {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.period-filter label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+}
+
+.period-filter input {
+  padding: 5px;
+  margin-top: 5px;
+}
+
+.period-filter button {
+  padding: 5px 10px;
+}
+
+.grades-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.grades-table th,
+.grades-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+.grades-table th {
+  background-color: #f4f4f4;
+}
